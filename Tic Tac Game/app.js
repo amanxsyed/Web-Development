@@ -15,9 +15,13 @@ const winPatterns = [
   [3, 4, 5],
   [6, 7, 8],
 ];
+const resetGame= () => {
+  turnO= true;
+  enableBoxes();
+  msgContainer.classList.add("hide");
+}
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
-    console.log("box clicked");
     if (turnO) {
       box.innerText = "O";
       turnO = false;
@@ -29,10 +33,21 @@ boxes.forEach((box) => {
     checkWinner();
   });
 });
-
+const disableBoxes = () => {
+  for(let box of boxes){
+    box.disabled = true;
+  }
+}
+const enableBoxes = () => {
+  for(let box of boxes){
+    box.disabled = false;
+    box.innerText = "";
+  }
+}
 const showWinner= (winner) => {
     msg.innerText = `Congratulations, Winner is ${winner}`;
     msgContainer.classList.remove("hide");
+    disableBoxes();
 }
 const checkWinner = () => {
   for (let pattern of winPatterns) {
@@ -47,3 +62,5 @@ const checkWinner = () => {
     }
   }
 }; 
+resetBtn.addEventListener("click", resetGame);
+newGameBtn.addEventListener("click", resetGame);
